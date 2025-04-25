@@ -1,9 +1,9 @@
 site_name: AWS SENAISP JULIO
-site_url: https://Julio-vincente.github.io/AWSStudy/
+site_url: https://julio-vincente.github.io/StudyAWS/
 site_author: Julio-vincente
 
 repo_url: https://github.com/Julio-vincente/StudyAWS
-repo_name: Julio-vincente/StudyAWS
+repo_name: StudyAWS
 edit_uri: edit/main/docs/
 
 theme:
@@ -67,13 +67,8 @@ markdown_extensions:
   - pymdownx.superfences
   - pymdownx.mark
   - attr_list
-  - pymdownx.emoji:
-      emoji_generator: !!python/name:material.extensions.emoji.to_svg
-      emoji_index: !!python/name:material.extensions.emoji.twemoji
-
 
 plugins:
-  - rss
   - search
 
 copyright: |

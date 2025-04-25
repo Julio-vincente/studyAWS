@@ -1,0 +1,75 @@
+site_name: AWS SENAISP JULIO
+site_url: https://Julio-vincente.github.io/AWSStudy/
+site_author: Julio-vincente
+
+repo_url: https://github.com/Julio-vincente/StudyAWS
+repo_name: Julio-vincente/StudyAWS
+edit_uri: edit/main/docs/
+
+theme:
+  name: material
+  features:
+    - announce.dismiss
+    - content.action.edit
+    - content.action.view
+    - content.code.annotate
+    - content.code.copy
+    - content.tooltips
+    - navigation.footer
+    - navigation.indexes
+    - navigation.sections
+    - navigation.tabs
+    - navigation.top
+    - navigation.tracking
+    - search.highlight
+    - search.share
+    - search.suggest
+    - toc.follow
+  language: en
+  palette:
+    - scheme: default
+      toggle:
+        icon: material/weather-night
+        name: dark mode
+      primary: blue grey
+      accent: blue
+    - scheme: slate
+      toggle:
+        icon: material/weather-sunny
+        name: light mode
+      primary: deep blue
+      accent: light blue
+
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/Julio-vincente
+    - icon: fontawesome/brands/medium
+      link: https://medium.com/@juliomacedo.vicente
+    - icon: fontawesome/brands/linkedin
+      link: https://www.linkedin.com/in/julio-vicente-b08239276/
+    - icon: fontawesome/solid/envelope
+      link: mailto:juliomacedo.vicente@gmail.com
+  analytics:
+    provider: google
+    property: G-JR05Y88RZB
+
+markdown_extensions:
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - admonition
+  - pymdownx.arithmatex:
+      generic: true
+  - footnotes
+  - pymdownx.details
+  - pymdownx.superfences
+  - pymdownx.mark
+  - attr_list
+
+plugins:
+  - search
+
+copyright: |
+  &copy; 2025 <a href="https://github.com/Julio-vincente"  target="_blank" rel="noopener"> Julio Vicente </a>

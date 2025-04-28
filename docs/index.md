@@ -1,4 +1,4 @@
-# Welcome to AWS Study Resources
+# Welcome
 
 This repository contains essential resources, scripts, and notes for learning and practicing AWS, especially for WorldSkills #53.
 

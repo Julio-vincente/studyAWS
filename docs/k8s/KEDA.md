@@ -2,7 +2,7 @@
 
 How to setup KEDA in K8s Cluster
 
-## DOCS
+## Docs
 
 [KEDA Docs](https://keda.sh/docs/1.5/concepts/scaling-deployments/).
 

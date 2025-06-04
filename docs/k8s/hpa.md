@@ -1,27 +1,34 @@
-# HPA K8s Documentation
+# HPA
 
 How to setup HPA in K8s Cluster
+
+## Docs
+
+[Metric Server docs](https://github.com/kubernetes-sigs/metrics-server).
+[Hpa Kubernetes docs](https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/).
+[Hpa Kubernetes command](https://kubernetes.io/docs/reference/kubectl/generated/kubectl_autoscale/).
+
 
 ## Workspace
 
 First you need a metric-server for collect you Kubelets metrics expose to Kubernetes API Server.
 
-### Installation:
+### Installation
 
 ```bash
-kubectl apply -f https://github.com/kubernetes-sigs/metrics-server/releases/latest/download/components.yaml
+k apply -f https://github.com/kubernetes-sigs/metrics-server/releases/latest/download/components.yaml
 ```
 
 Validation:
 ```bash
-kubectl top nodes
-kubectl top pods
+k top nodes
+k top pods
 # se estiver tudo normal e o metric server estiver funcionando ele vai aparecer as metricas
 ```
 
 Default configuration for metric-server:
 ```bash
-kubectl edit deployment metrics-server -n kube-system
+k edit deployment metrics-server -n kube-system
 
 # dentro do arquivo procure por args e adicione essas linhas:
 args:
@@ -61,9 +68,14 @@ spec:
         averageUtilization: 70 # porcentagem da utilzacao para escalar
 ```
 
+How to create hpa template:
+```bash
+k autoscale deployment "hpa-name" --min=2 --max=10 --cpu-percent=70 --dry-run='client' -o yaml > hpa.yaml
+```
+
 HPA Visualization:
 ```bash
-kubectl get hpa # pode colocar um -w para fazer com que o hpa vai ficar executando ate mudar alguma coisa 
+k get hpa # pode colocar um -w para fazer com que o hpa vai ficar executando ate mudar alguma coisa 
 ```
 
 ## Deployment configuration

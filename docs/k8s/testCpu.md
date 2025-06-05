@@ -2,9 +2,9 @@
 
 ## Docs
 
-HELP[](https://medium.com/@email2smohanty/stress-testing-kubernetes-k8s-and-openshift-nodes-using-stress-ng-35b6a9752c8d).
-Stress-ng Docs:[](https://blog.ironlinux.com.br/estressando-mem-disco-e-cpu-com-stress-ng-debian9/).
-Poli Linux/Container:[](https://hub.docker.com/r/polinux/stress).
+HELP:[Medium Docs](https://medium.com/@email2smohanty/stress-testing-kubernetes-k8s-and-openshift-nodes-using-stress-ng-35b6a9752c8d).
+Stress-ng Docs:[Stress Installation](https://blog.ironlinux.com.br/estressando-mem-disco-e-cpu-com-stress-ng-debian9/).
+Poli Linux/Container:[Dockerhub polinux stress](https://hub.docker.com/r/polinux/stress).
 
 ## Workspace
 

@@ -1,36 +1,36 @@
-# HPA
+# HPA – Horizontal Pod Autoscaler no Kubernetes
 
-How to setup HPA in K8s Cluster
+## Referências
 
-## Docs
+* [Metrics Server](https://github.com/kubernetes-sigs/metrics-server)
+* [Documentação HPA (K8s)](https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/)
+* [Comando `kubectl autoscale`](https://kubernetes.io/docs/reference/kubectl/generated/kubectl_autoscale/)
 
-[Metric Server docs](https://github.com/kubernetes-sigs/metrics-server).
-[Hpa Kubernetes docs](https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/).
-[Hpa Kubernetes command](https://kubernetes.io/docs/reference/kubectl/generated/kubectl_autoscale/).
+---
 
-
-## Workspace
-
-First you need a metric-server for collect you Kubelets metrics expose to Kubernetes API Server.
-
-### Installation
+## Instalação do Metrics Server
 
 ```bash
-k apply -f https://github.com/kubernetes-sigs/metrics-server/releases/latest/download/components.yaml
+kubectl apply -f https://github.com/kubernetes-sigs/metrics-server/releases/latest/download/components.yaml
 ```
 
-Validation:
+### Validação
+
 ```bash
-k top nodes
-k top pods
-# se estiver tudo normal e o metric server estiver funcionando ele vai aparecer as metricas
+kubectl top nodes
+kubectl top pods
+# Se aparecerem as métricas, está funcionando corretamente
 ```
 
-Default configuration for metric-server:
-```bash
-k edit deployment metrics-server -n kube-system
+### Configuração recomendada
 
-# dentro do arquivo procure por args e adicione essas linhas:
+```bash
+kubectl edit deployment metrics-server -n kube-system
+```
+
+Adicione em `args`:
+
+```yaml
 args:
 - --kubelet-insecure-tls
 - --kubelet-preferred-address-types=InternalIP,ExternalIP,Hostname
@@ -38,9 +38,10 @@ args:
 
 ---
 
-## HPA Manifest
+## Manifesto do HPA
+
 ```yaml
-apiVersion: autoscaling/v2 # tem que ser v2
+apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
 metadata:
   name: monitor-app-hpa
@@ -49,50 +50,59 @@ spec:
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment
-    name: {{ .Values.deployment.name }} # so o nome do deployment indicado no values helm
-		# nesse caso usei para o deployment
-  minReplicas: 2 
+    name: {{ .Values.deployment.name }}   # Nome do deployment (Helm)
+  minReplicas: 2
   maxReplicas: 5
   metrics:
-  - type: Resource
-    resource:
-      name: cpu
-      target:
-        type: Utilization
-        averageUtilization: 50 # porcentagem da utilzacao para escalar
-  - type: Resource
-    resource:
-      name: memory
-      target:
-        type: Utilization
-        averageUtilization: 70 # porcentagem da utilzacao para escalar
+    - type: Resource
+      resource:
+        name: cpu
+        target:
+          type: Utilization
+          averageUtilization: 50        # Escala com uso acima de 50% da CPU
+    - type: Resource
+      resource:
+        name: memory
+        target:
+          type: Utilization
+          averageUtilization: 70        # Escala com uso acima de 70% da Memória
 ```
 
-How to create hpa template:
+---
+
+## Gerar HPA via comando
+
 ```bash
-k autoscale deployment "hpa-name" --min=2 --max=10 --cpu-percent=70 --dry-run='client' -o yaml > hpa.yaml
+kubectl autoscale deployment app-name --min=2 --max=10 --cpu-percent=70 --dry-run=client -o yaml > hpa.yaml
 ```
 
-HPA Visualization:
+---
+
+## Monitoramento do HPA
+
 ```bash
-k get hpa # pode colocar um -w para fazer com que o hpa vai ficar executando ate mudar alguma coisa 
+kubectl get hpa -w    # Exibe o status em tempo real
 ```
 
-## Deployment configuration
+---
 
-Be very careful with the indentation. If there's an error inside the HPA but the 'top nodes' command works, check if the indentation is correct. A common error is showing 'unknown' in the HPA while the metrics are working—this usually means the indentation is wrong in the deployment or in the specified configuration.
+## Recurso obrigatório no Deployment
+
+O HPA só funciona se o Deployment definir corretamente os recursos (`resources:`).
+**Indentação errada = HPA não funciona (mostra "unknown")**
+
 ```yaml
-    spec:
-      containers:
-      - name: app
-        image: {{ .Values.image }}
-        ports:
+spec:
+  containers:
+    - name: app
+      image: {{ .Values.image }}
+      ports:
         - containerPort: 5000
-        resources: # tomar cuidado com a identacao dessa merda
-          requests:
-            cpu: "100m"
-            memory: "64Mi"
-          limits:
-            cpu: "200m" # nao e bom definir um limite de cpu mas coloquei aqui para teste
-            memory: "128Mi"
+      resources:
+        requests:
+          cpu: "100m"
+          memory: "64Mi"
+        limits:
+          cpu: "200m"      # Normalmente nao se limita cpu do container
+          memory: "128Mi"
 ```

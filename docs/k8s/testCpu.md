@@ -1,41 +1,49 @@
-# Stress CPU workload
+# Stress de CPU no Kubernetes
 
-## Docs
+## Referências
 
-HELP:[Medium Docs](https://medium.com/@email2smohanty/stress-testing-kubernetes-k8s-and-openshift-nodes-using-stress-ng-35b6a9752c8d).
-Stress-ng Docs:[Stress Installation](https://blog.ironlinux.com.br/estressando-mem-disco-e-cpu-com-stress-ng-debian9/).
-Poli Linux/Container:[Dockerhub polinux stress](https://hub.docker.com/r/polinux/stress).
+* [Artigo Medium](https://medium.com/@email2smohanty/stress-testing-kubernetes-k8s-and-openshift-nodes-using-stress-ng-35b6a9752c8d)
+* [Guia stress-ng](https://blog.ironlinux.com.br/estressando-mem-disco-e-cpu-com-stress-ng-debian9/)
+* [Imagem Docker polinux/stress-ng](https://hub.docker.com/r/polinux/stress)
 
-## Workspace
+---
+
+## Namespace para o teste
 
 ```bash
-k create namespace monitor
+kubectl create namespace monitor
 ```
 
 ---
 
-## Test Manifest
+## Manifesto de teste (CPU Stress)
+
 ```yaml
 apiVersion: v1
 kind: Pod
 metadata:
-  name: {{ .Values.test.name }} # valor do values do helm 
+  name: {{ .Values.test.name }}        # Nome vindo do values.yaml (Helm)
   namespace: monitor
 spec:
   containers:
     - name: stress
-      image: polinux/stress-ng # utilizando essa imagem qualquer duvida olhar docs
-      command: [ 'stress-ng' ]
-      args: [ "--cpu", "2", "--cpu-method", "fft", "--timeout", "300s" ] # fazendo com que use 2 cpus estrasando ela durante 300s
+      image: polinux/stress-ng
+      command: [ "stress-ng" ]
+      args: [ "--cpu", "2", "--cpu-method", "fft", "--timeout", "300s" ]  
+      # Usa 2 CPUs com carga alta por 300 segundos (FFT)
   restartPolicy: Never
 ```
 
-Aplicar:
+---
+
+## Aplicar o teste
+
 ```bash
-k apply -f test-memory-cpu.yaml
+kubectl apply -f test-memory-cpu.yaml
 ```
 
-Validation:
+### Validar execução
+
 ```bash
-k get pods -n monitor
+kubectl get pods -n monitor
 ```

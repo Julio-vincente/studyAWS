@@ -1,4 +1,4 @@
-# Setup Prometheus + Grafana no Kubernetes
+# Setup Prometheus + Grafana no k8s
 
 ## Referências
 
@@ -28,7 +28,7 @@ helm install prometheus prometheus-community/prometheus \
 
 ```bash
 helm install grafana grafana/grafana \
-  --namespace monitoring
+  --namespace monitoring --create-namespace
 ```
 
 ---
@@ -69,29 +69,71 @@ Acesse: [http://localhost:9090](http://localhost:9090)
 
 ---
 
-Claro! Aqui está exatamente o que você pediu: os comandos **helm** com o parâmetro para **indicar a label do Node Group (role=monitoring) no nodeSelector** — direto no comando Helm.
+# Instalação do Prometheus e Grafana com Node Selector
 
----
+## Criar arquivos de configuração
 
-# Helm commands para instalar Prometheus e Grafana no Node Group com label que no caso sera `role=monitoring`
+### prometheus-values.yaml
+```yaml
+nodeSelector:
+  nodegroup: monitoring
 
-### Prometheus
+prometheus:
+  nodeSelector:
+    nodegroup: monitoring
+  service:
+    type: ClusterIP
 
-```bash
-helm install prometheus prometheus-community/prometheus \
-  --namespace monitoring --create-namespace \
-  --set server.nodeSelector.role=monitoring \
-  --set alertmanager.nodeSelector.role=monitoring \
-  --set pushgateway.nodeSelector.role=monitoring \
-  --set kubeStateMetrics.nodeSelector.role=monitoring
+alertmanager:
+  nodeSelector:
+    nodegroup: monitoring
+
+grafana:
+  nodeSelector:
+    nodegroup: monitoring
 ```
 
-### Grafana
+### grafana-values.yaml
+```yaml
+nodeSelector:
+  nodegroup: monitoring
+```
+
+## Comandos de instalação
 
 ```bash
-helm install grafana grafana/grafana \
+# Adicionar repositórios Helm
+helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
+helm repo add grafana https://grafana.github.io/helm-charts
+helm repo update
+
+# Instalar Prometheus Stack
+helm install kube-prometheus prometheus-community/kube-prometheus-stack \
+  -f prometheus-values.yaml \
   --namespace monitoring \
-  --set nodeSelector.role=monitoring
+  --create-namespace
+
+# Instalar Grafana  
+helm install grafana grafana/grafana \
+  -f grafana-values.yaml \
+  --namespace monitoring \
+  --create-namespace
 ```
 
----
+## Verificar instalação
+```bash
+kubectl get pods -n monitoring -o wide
+```
+
+## Acessar os serviços
+
+```bash
+# Prometheus
+kubectl port-forward -n monitoring pod/prometheus-kube-prometheus-kube-prome-prometheus-0 9090
+
+# Grafana
+kubectl port-forward svc/grafana 3000:80 -n monitoring
+```
+**Credenciais Grafana:**
+- Usuário: admin
+- Senha: `kubectl get secret grafana -n monitoring -o jsonpath="{.data.admin-password}" | base64 --decode`

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+    <url>
+         <loc>https://julio-vincente.github.io/StudyAWS/</loc>
+         <lastmod>2025-06-06</lastmod>
+    </url>
+    <url>
+         <loc>https://julio-vincente.github.io/StudyAWS/CloudWatch/x-ray/</loc>
+         <lastmod>2025-06-06</lastmod>
+    </url>
+    <url>
+         <loc>https://julio-vincente.github.io/StudyAWS/k8s/hpa/</loc>
+         <lastmod>2025-06-06</lastmod>
+    </url>
+    <url>
+         <loc>https://julio-vincente.github.io/StudyAWS/k8s/keda/</loc>
+         <lastmod>2025-06-06</lastmod>
+    </url>
+    <url>
+         <loc>https://julio-vincente.github.io/StudyAWS/k8s/promeGrafa/</loc>
+         <lastmod>2025-06-06</lastmod>
+    </url>
+    <url>
+         <loc>https://julio-vincente.github.io/StudyAWS/k8s/testCpu/</loc>
+         <lastmod>2025-06-06</lastmod>
+    </url>
+</urlset>

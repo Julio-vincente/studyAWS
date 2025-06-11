@@ -69,11 +69,11 @@ Acesse: [http://localhost:9090](http://localhost:9090)
 
 ---
 
-# Instalação do Prometheus e Grafana com Node Selector
+## Instalação do Prometheus e Grafana com Node Selector
 
-## Criar arquivos de configuração
+### Criar arquivos de configuração
 
-### prometheus-values.yaml
+#### prometheus-values.yaml
 ```yaml
 nodeSelector:
   nodegroup: monitoring
@@ -97,6 +97,14 @@ grafana:
 ```yaml
 nodeSelector:
   nodegroup: monitoring
+
+grafana:
+  additionalDataSources:
+    - name: Prometheus
+      type: prometheus
+      url: http://kube-prometheus-kube-prome-prometheus.monitoring.svc.cluster.local:9090
+      access: proxy
+      isDefault: true
 ```
 
 ## Comandos de instalação
@@ -136,4 +144,4 @@ kubectl port-forward svc/grafana 3000:80 -n monitoring
 ```
 **Credenciais Grafana:**
 - Usuário: admin
-- Senha: `kubectl get secret grafana -n monitoring -o jsonpath="{.data.admin-password}" | base64 --decode`
+- Senha: `kubectl get secret grafana -n monitoring -o jsonpath="{.data.admin-password}" | base64 --decode`  

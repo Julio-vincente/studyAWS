@@ -2,9 +2,9 @@
 
 Quick reference guide for installing and configuring essential development tools for AWS environments.
 
----
+## Packages
 
-## AWS CLI
+### AWS CLI
 
 ```bash
 # AWS CLI v2 (latest)
@@ -21,7 +21,7 @@ aws --version
 
 ---
 
-## curl
+### curl
 
 ```bash
 # Install curl
@@ -35,7 +35,7 @@ curl --version
 
 ---
 
-## Docker
+### Docker
 
 ```bash
 # Install and configure Docker
@@ -52,7 +52,7 @@ docker --version
 
 ---
 
-## jq
+### jq
 
 ```bash
 # Install jq JSON processor
@@ -66,7 +66,7 @@ jq --version
 
 ---
 
-## kubectl
+### kubectl
 
 ```bash
 # Install kubectl
@@ -101,5 +101,4 @@ installation commands
 ```bash
 # Verify installation
 verification command
-```
 ```

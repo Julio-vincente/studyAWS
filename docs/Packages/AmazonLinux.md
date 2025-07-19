@@ -1,4 +1,4 @@
-# Essential AWS Development Tools
+# AmazonLinux Packages
 
 Quick reference guide for installing and configuring essential development tools for Amazon Linux AWS environments.
 

@@ -1,6 +1,6 @@
 # Essential AWS Development Tools
 
-Quick reference guide for installing and configuring essential development tools for AWS environments.
+Quick reference guide for installing and configuring essential development tools for Amazon Linux AWS environments.
 
 ## Packages
 
@@ -20,7 +20,7 @@ aws --version
 ```
 
 ---
-
+    
 ### curl
 
 ```bash

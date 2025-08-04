@@ -1,4 +1,4 @@
-# Setup Prometheus + Grafana no k8s
+# Prometheus && Grafana
 
 ## Referências
 

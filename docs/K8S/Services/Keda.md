@@ -1,4 +1,4 @@
-# KEDA – Kubernetes Event-Driven Autoscaling
+# KEDA
 
 ## Referência
 

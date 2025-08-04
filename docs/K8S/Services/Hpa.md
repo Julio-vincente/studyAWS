@@ -1,4 +1,4 @@
-# HPA – Horizontal Pod Autoscaler no Kubernetes
+# HPA
 
 ## Referências
 

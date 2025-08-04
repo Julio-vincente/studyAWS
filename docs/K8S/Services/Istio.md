@@ -1,6 +1,6 @@
 # Istio
 
-## References
+## Referências
 
 * [Istio install]( https://istio.io/latest/docs/setup/install/helm/ )
 * [Istioctl cmd]( https://istio.io/latest/docs/reference/commands/istioctl/ )
@@ -25,11 +25,9 @@ helm upgrade --install istio-ingress istio/gateway -n istio-ingress --create-nam
 kubectl label namespace istio-ingress istio-injection=enabled
 ```
 
-## Validation
+## Validação
 
 ```bash
 helm ls -n istio-system
 helm ls -n istio-ingress
 ```
-
----

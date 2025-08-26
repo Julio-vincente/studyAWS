@@ -1,0 +1,22 @@
+version: 0.2
+
+phases:
+  install:
+    commands:
+      - echo ">> Instalando dependências se necessário"
+  pre_build:
+    commands:
+      - echo ">> Etapa pré-build (checagens, testes rápidos)"
+  build:
+    commands:
+      - echo ">> Construindo artefato para CodeDeploy"
+      - mkdir -p dist
+      - cp -R app appspec.yml scripts dist/
+  post_build:
+    commands:
+      - echo ">> Build finalizado em `date`"
+
+artifacts:
+  files:
+    - '**/*'
+  base-directory: dist

@@ -111,3 +111,27 @@ eksctl utils apply -f eks-console-access.yaml --approve
 ```bash
 kubectl get events -A --field-selector reason=RegisteredNode
 ```
+
+---
+apiVersion: eksctl.io/v1alpha5
+kind: ClusterConfig
+
+metadata:
+  name: funny-alternative-mountain
+  region: us-east-1
+  version: "1.33"
+
+managedNodeGroups:
+- name: nodegroup
+  desiredCapacity: 3
+  instanceType: t2.small
+  ssh:
+    enableSsm: true
+
+vpc:
+  id: vpc-0994bcd9ba10a742b
+  subnets:
+    public:
+      us-east-1a: { id: "subnet-022878b0be20d9b41" }
+      us-east-1b: { id: "subnet-0b50f6175bf1b3bf9" }
+  securityGroup: "sg-0e8cbfecf16e470a9"
